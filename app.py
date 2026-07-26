@@ -121,17 +121,6 @@ def api_validate():
         "final_state": dfa_data["final_state"],
     }
 
-
-import os
-
-from flask import Flask
-
-app = Flask(__name__)
-
-@app.route("/")
-def home():
-    return "Railway OK"
-
 if __name__ == "__main__":
     import os
     port = int(os.environ.get("PORT", 5000))
