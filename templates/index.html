@@ -1,0 +1,664 @@
+{% extends "base.html" %}
+
+{% block title %}
+Plate Validator Indonesia
+{% endblock %}
+
+{% block content %}
+
+<div class="row align-items-center mb-5 fade-up">
+
+    <div class="col-lg-8">
+
+        <h1 class="display-4 fw-bold text-gradient mb-3">
+            🚗 Plate Validator Indonesia
+        </h1>
+        <p class="lead text-secondary mt-3">
+            Validasi format plat nomor kendaraan Indonesia menggunakan
+            <strong class="text-primary">Deterministic Finite Automata (DFA)</strong> dan
+            <strong class="text-primary">Regular Expression (Regex)</strong>.
+        </p>
+
+        <div class="mt-4">
+
+            <a href="#validator" class="btn btn-primary btn-lg">
+
+                Mulai Validasi
+
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="col-lg-4 text-center pulse-glow" style="border-radius: 50%; padding: 20px;">
+        <i class="bi bi-car-front-fill text-gradient"
+           style="font-size:150px; opacity: 0.8;"></i>
+    </div>
+
+</div>
+
+<div class="row mb-5">
+
+    <div class="col-md-4">
+
+        <div class="stat-card stat-valid shadow-soft">
+
+            <h2>{{ valid }}</h2>
+
+            <p>VALID</p>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-4">
+
+        <div class="stat-card stat-invalid shadow-soft">
+
+            <h2>{{ invalid }}</h2>
+
+            <p>INVALID</p>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-4">
+
+        <div class="stat-card stat-total shadow-soft">
+
+            <h2>{{ history|length }}</h2>
+
+            <p>TOTAL VALIDASI</p>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="row" id="validator">
+
+    <div class="col-lg-4">
+
+        <div class="card shadow-soft rounded-xl fade-up mb-4">
+
+            <div class="card-body">
+
+                <h4 class="mb-4">
+
+                    Validasi Plat
+
+                </h4>
+
+                <form method="POST">
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+
+                            Nomor Plat
+
+                        </label>
+
+                        <input
+                            type="text"
+                            class="form-control form-control-lg"
+                            name="plate"
+                            placeholder="Contoh : D 1234 ABC"
+                            maxlength="10"
+                            autocomplete="off"
+                            required>
+
+                    </div>
+
+                    <button
+                        class="btn btn-primary w-100">
+
+                        Validasi
+
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+        <div class="card shadow-sm border-0">
+
+            <div class="card-body">
+
+                <h5>
+
+                    Statistik
+
+                </h5>
+
+                <hr>
+
+                <div class="d-flex justify-content-between">
+
+                    <span>Total Valid</span>
+
+                    <span class="badge bg-success">
+
+                        {{ valid }}
+
+                    </span>
+
+                </div>
+
+                <div class="d-flex justify-content-between mt-2">
+
+                    <span>Total Tidak Valid</span>
+
+                    <span class="badge bg-danger">
+
+                        {{ invalid }}
+
+                    </span>
+
+                </div>
+
+                <hr>
+
+                <canvas id="chartValidation"></canvas>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <hr>
+
+<div class="row text-center">
+
+    <div class="col-4">
+
+        <h5>{{ valid }}</h5>
+
+        <small>Valid</small>
+
+    </div>
+
+    <div class="col-4">
+
+        <h5>{{ invalid }}</h5>
+
+        <small>Invalid</small>
+
+    </div>
+
+    <div class="col-4">
+
+        <h5>{{ history|length }}</h5>
+
+        <small>Total</small>
+
+    </div>
+
+</div>
+
+
+    <div class="col-lg-8">
+
+        <div class="card shadow-sm border-0 mb-4">
+
+            <div class="card-body">
+
+                <h4>
+
+                    Hasil Validasi
+
+                </h4>
+
+                <hr>
+
+                {% if result %}
+
+                    {% if result == "VALID" %}
+
+                        <div class="alert alert-success">
+
+                            <h5>
+
+                                Plat Nomor VALID
+
+                            </h5>
+
+                        </div>
+
+                    {% else %}
+
+                        <div class="alert alert-danger">
+
+                            <h5>
+
+                                Plat Nomor TIDAK VALID
+
+                            </h5>
+
+                        </div>
+
+                    {% endif %}
+
+                    <table class="table">
+
+                        <tr>
+
+                            <th width="30%">
+
+                                Regex
+
+                            </th>
+
+                            <td>
+
+                                {% if regex_result %}
+
+                                    <span class="badge bg-success">
+
+                                        VALID
+
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="badge bg-danger">
+
+                                        INVALID
+
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th>
+
+                                DFA
+
+                            </th>
+
+                            <td>
+
+                                {% if dfa_result %}
+
+                                    <span class="badge bg-success">
+
+                                        VALID
+
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="badge bg-danger">
+
+                                        INVALID
+
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+                        </tr>
+
+                    </table>
+
+                {% else %}
+
+                    <div class="alert alert-secondary">
+
+                        Belum ada proses validasi.
+
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+        
+                <div class="card shadow-sm border-0 mb-4">
+
+            <div class="card-body">
+
+                <h4>
+
+                    Riwayat State DFA
+
+                </h4>
+
+                <hr>
+
+                {% if states %}
+
+                    <div class="d-flex flex-wrap">
+
+                        {% for state in states %}
+
+                            <span class="badge bg-primary me-2 mb-2 p-2">
+
+                                {{ state }}
+
+                            </span>
+
+                        {% endfor %}
+
+                    </div>
+
+                {% else %}
+
+                    <div class="alert alert-light">
+
+                        Belum ada perpindahan state.
+
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+
+        <div class="card shadow-sm border-0 mb-4">
+
+            <div class="card-body">
+
+                <h4>
+
+                    Transisi DFA
+
+                </h4>
+
+                <hr>
+
+                {% if transitions %}
+
+                <div class="table-responsive">
+
+                    <table class="table table-bordered table-hover">
+
+                        <thead class="table-dark">
+
+                            <tr>
+
+                                <th>No</th>
+                                <th>State Awal</th>
+                                <th>Input</th>
+                                <th>State Tujuan</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            {% for item in transitions %}
+
+                            <tr>
+
+                                <td>{{ loop.index }}</td>
+
+                                <td>{{ item.from_state }}</td>
+
+                                <td>{{ item.input }}</td>
+
+                                <td>{{ item.to_state }}</td>
+
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+                {% else %}
+
+                    <div class="alert alert-light">
+
+                        Belum ada data transisi.
+
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+
+        <div class="card shadow-sm border-0">
+
+            <div class="card-body">
+
+                <h4>
+
+                    Riwayat Validasi
+
+                </h4>
+
+                <hr>
+
+                {% if history %}
+
+                <div class="table-responsive">
+
+                    <table class="table table-striped table-hover">
+
+                        <thead class="table-dark">
+
+                            <tr>
+
+                                <th>No</th>
+                                <th>Plat Nomor</th>
+                                <th>Regex</th>
+                                <th>DFA</th>
+                                <th>Status</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            {% for item in history %}
+
+                            <tr>
+
+                                <td>{{ loop.index }}</td>
+
+                                <td>
+
+                                    <strong>
+
+                                        {{ item.plate }}
+
+                                    </strong>
+
+                                </td>
+
+                                <td>
+
+                                    {% if item.regex %}
+
+                                        <span class="badge bg-success">
+
+                                            VALID
+
+                                        </span>
+
+                                    {% else %}
+
+                                        <span class="badge bg-danger">
+
+                                            INVALID
+
+                                        </span>
+
+                                    {% endif %}
+
+                                </td>
+
+                                <td>
+
+                                    {% if item.dfa %}
+
+                                        <span class="badge bg-success">
+
+                                            VALID
+
+                                        </span>
+
+                                    {% else %}
+
+                                        <span class="badge bg-danger">
+
+                                            INVALID
+
+                                        </span>
+
+                                    {% endif %}
+
+                                </td>
+
+                                <td>
+
+                                    {% if item.result == "VALID" %}
+
+                                        <span class="badge bg-success">
+
+                                            VALID
+
+                                        </span>
+
+                                    {% else %}
+
+                                        <span class="badge bg-danger">
+
+                                            TIDAK VALID
+
+                                        </span>
+
+                                    {% endif %}
+
+                                </td>
+
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+                {% else %}
+
+                    <div class="alert alert-secondary">
+
+                        Belum ada riwayat validasi.
+
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+
+{% block scripts %}
+
+<script>
+
+const chartCanvas = document.getElementById("chartValidation");
+
+if(chartCanvas){
+
+    const valid = Number("{{ valid }}");
+    const invalid = Number("{{ invalid }}");
+
+    const getChartColor = () => {
+        const theme = document.documentElement.getAttribute('data-theme') || 'dark';
+        return theme === 'light' ? '#334155' : '#cbd5e1';
+    };
+
+    let chartInstance = new Chart(chartCanvas,{
+
+        type:"doughnut",
+
+        data:{
+
+            labels:[
+                "VALID",
+                "INVALID"
+            ],
+
+            datasets:[{
+
+                data:[
+                    valid,
+                    invalid
+                ],
+                backgroundColor: [
+                    '#10b981', // emerald-500
+                    '#ef4444'  // red-500
+                ],
+                borderWidth: 0
+
+            }]
+
+        },
+
+        options:{
+            responsive:true,
+            color: getChartColor(),
+            plugins:{
+                legend:{
+                    position:"bottom",
+                    labels: {
+                        color: getChartColor(),
+                        font: {
+                            family: "'Outfit', sans-serif"
+                        }
+                    }
+                }
+            },
+            cutout: '70%'
+        }
+
+    });
+
+    // Update chart colors when theme changes
+    window.addEventListener('themeChanged', (e) => {
+        const newColor = e.detail === 'light' ? '#334155' : '#cbd5e1';
+        chartInstance.options.color = newColor;
+        chartInstance.options.plugins.legend.labels.color = newColor;
+        chartInstance.update();
+    });
+
+}
+
+</script>
+
+{% endblock %}

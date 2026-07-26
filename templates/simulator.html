@@ -1,0 +1,214 @@
+{% extends "base.html" %}
+
+{% block title %}
+Simulator DFA
+{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+
+    <div class="col-lg-10">
+
+        <div class="card shadow border-0">
+
+            <div class="card-body p-5">
+
+                <h2 class="fw-bold mb-3 text-gradient">
+                    Simulator Deterministic Finite Automata (DFA)
+                </h2>
+                <p class="text-secondary">
+                    Halaman ini menjelaskan proses validasi nomor plat kendaraan
+                    menggunakan metode Deterministic Finite Automata (DFA).
+                </p>
+
+                <hr>
+
+                <h4 class="mt-4">
+
+                    Struktur Plat Nomor
+
+                </h4>
+
+                <p>
+
+                    Format yang digunakan pada aplikasi adalah:
+
+                </p>
+
+                <div class="alert alert-info text-center fs-5">
+                    <strong>
+                        Huruf (1–2) → Angka (1–4) → Huruf (1–3)
+                    </strong>
+                </div>
+
+                <p>
+
+                    Contoh plat yang diterima:
+
+                </p>
+
+                <ul>
+
+                    <li>D 1234 ABC</li>
+
+                    <li>B 1 A</li>
+
+                    <li>AB 999 CD</li>
+
+                    <li>F 123 ZZ</li>
+
+                </ul>
+
+                <p>
+
+                    Contoh yang ditolak:
+
+                </p>
+
+                <ul>
+
+                    <li>123 ABC</li>
+
+                    <li>ABC12345</li>
+
+                    <li>D123456AA</li>
+
+                    <li>D123ABCD</li>
+
+                </ul>
+
+                <hr>
+
+                <h4 class="mt-4 mb-4">
+
+                    Diagram DFA
+
+                </h4>
+                </h4>
+
+                <div class="dfa-container">
+
+                    <div class="dfa-state start">
+
+                        q0
+
+                    </div>
+
+                    <div class="dfa-arrow">
+                        <span>A-Z</span>
+                    </div>
+                    <div class="dfa-state">
+                        q1
+                     </div>
+                    <div class="dfa-arrow">
+                        <span>A-Z</span>
+                    </div>
+                    <div class="dfa-state">
+                        q2
+                    </div>
+                    <div class="dfa-arrow">
+                        <span>0-9</span>
+                    </div>
+                    <div class="dfa-state">
+                        q3
+                    </div>
+                    <div class="dfa-arrow">
+                        <span>A-Z</span>
+                    </div>
+
+                    <div class="dfa-state accept">
+
+                        q4
+
+                    </div>
+
+                </div>
+
+                <div class="alert alert-light">
+
+    <h5>
+
+        Penjelasan State
+
+    </h5>
+
+    <ul>
+
+        <li><strong>q0</strong> : State awal.</li>
+
+        <li><strong>q1</strong> : Membaca huruf pertama.</li>
+
+        <li><strong>q2</strong> : Membaca huruf kedua (opsional).</li>
+
+        <li><strong>q3</strong> : Membaca angka (1–4 digit).</li>
+
+        <li><strong>q4</strong> : Accept State, membaca huruf belakang (1–3 huruf).</li>
+
+    </ul>
+
+</div>
+
+                <hr>
+
+                <h4 class="mt-4">
+
+                    Alur Perpindahan State
+
+                </h4>
+
+                <div class="text-center my-4">
+
+                    <div class="d-inline-block border border-secondary rounded px-3 py-2" style="background: rgba(255,255,255,0.1); color: #fff;">
+                        q0
+                    </div>
+                    →
+                    <div class="d-inline-block border border-primary rounded px-3 py-2 bg-primary text-white">
+                        q1
+                    </div>
+                    →
+                    <div class="d-inline-block border border-primary rounded px-3 py-2 bg-primary text-white">
+                        q2
+                    </div>
+                    →
+                    <div class="d-inline-block border border-warning rounded px-3 py-2" style="background: rgba(245, 158, 11, 0.2); color: #fcd34d;">
+                        q3
+                    </div>
+                    →
+                    <div class="d-inline-block border border-success rounded px-3 py-2 bg-success text-white">
+                        q4
+                    </div>
+
+                </div>
+
+                <hr>
+
+                <h4>
+
+                    Kesimpulan
+
+                </h4>
+
+                <p>
+
+                    DFA bekerja dengan membaca setiap karakter secara berurutan.
+
+                    Apabila seluruh karakter berhasil melewati transisi hingga
+                    mencapai state akhir (<strong>q4</strong>), maka nomor plat
+                    dinyatakan <strong>VALID</strong>.
+
+                    Jika pada salah satu karakter terjadi transisi yang tidak
+                    sesuai, proses langsung berhenti dan hasil validasi menjadi
+                    <strong>TIDAK VALID</strong>.
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

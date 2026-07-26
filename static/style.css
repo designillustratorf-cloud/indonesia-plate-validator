@@ -1,0 +1,651 @@
+/* =======================================================
+   CSS VARIABLES (Premium HSL Palette)
+======================================================= */
+:root {
+    --bg-primary: #0f172a; /* Slate 900 */
+    --bg-secondary: #1e293b; /* Slate 800 */
+    --bg-tertiary: rgba(30, 41, 59, 0.7);
+    
+    --text-primary: #f8fafc; /* Slate 50 */
+    --text-secondary: #cbd5e1; /* Slate 300 */
+    --text-muted: #94a3b8; /* Slate 400 */
+    
+    --accent-primary: #3b82f6; /* Blue 500 */
+    --accent-primary-hover: #2563eb; /* Blue 600 */
+    --accent-secondary: #8b5cf6; /* Violet 500 */
+    
+    --success: #10b981; /* Emerald 500 */
+    --success-bg: rgba(16, 185, 129, 0.15);
+    
+    --danger: #ef4444; /* Red 500 */
+    --danger-bg: rgba(239, 68, 68, 0.15);
+    
+    --warning: #f59e0b; /* Amber 500 */
+    --warning-bg: rgba(245, 158, 11, 0.15);
+    
+    --glass-bg: rgba(30, 41, 59, 0.6);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+    
+    --transition-fast: 0.2s ease;
+    --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* =======================================================
+   LIGHT THEME VARIABLES
+======================================================= */
+[data-theme="light"] {
+    --bg-primary: #f8fafc; /* Slate 50 */
+    --bg-secondary: #ffffff; /* White */
+    --bg-tertiary: rgba(241, 245, 249, 0.7); /* Slate 100 */
+    
+    --text-primary: #0f172a; /* Slate 900 */
+    --text-secondary: #334155; /* Slate 700 */
+    --text-muted: #64748b; /* Slate 500 */
+    
+    --accent-primary: #2563eb; /* Blue 600 */
+    --accent-primary-hover: #1d4ed8; /* Blue 700 */
+    --accent-secondary: #7c3aed; /* Violet 600 */
+    
+    --glass-bg: rgba(255, 255, 255, 0.7);
+    --glass-border: rgba(0, 0, 0, 0.08);
+    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+}
+
+/* =======================================================
+   GLOBAL
+======================================================= */
+body {
+    background-color: var(--bg-primary);
+    background-image: 
+        radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.15) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(139, 92, 246, 0.15) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(59, 130, 246, 0.15) 0px, transparent 50%),
+        radial-gradient(at 0% 100%, rgba(16, 185, 129, 0.1) 0px, transparent 50%);
+    background-attachment: fixed;
+    font-family: 'Outfit', sans-serif;
+    color: var(--text-primary);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+}
+
+p {
+    color: var(--text-secondary);
+    line-height: 1.7;
+}
+
+a {
+    text-decoration: none;
+    color: var(--accent-primary);
+    transition: var(--transition-fast);
+}
+
+a:hover {
+    color: var(--accent-secondary);
+}
+
+.main-content {
+    padding-top: 100px;
+    padding-bottom: 50px;
+    min-height: calc(100vh - 150px);
+}
+
+/* =======================================================
+   UTILITIES
+======================================================= */
+.text-gradient {
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.text-gradient-success {
+    background: linear-gradient(135deg, #34d399, var(--success));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.text-gradient-danger {
+    background: linear-gradient(135deg, #f87171, var(--danger));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.glass-panel {
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    box-shadow: var(--glass-shadow);
+}
+
+/* =======================================================
+   NAVBAR (Glassmorphism)
+======================================================= */
+.glass-navbar {
+    background: var(--bg-tertiary) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--glass-border);
+    padding: 15px 0;
+    transition: var(--transition-normal);
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+    letter-spacing: -0.02em;
+}
+
+.nav-link {
+    color: var(--text-secondary) !important;
+    font-weight: 500;
+    margin: 0 10px;
+    position: relative;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 50%;
+    background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+    transition: var(--transition-normal);
+    transform: translateX(-50%);
+}
+
+.nav-link:hover::after, .nav-link.active::after {
+    width: 100%;
+}
+
+.nav-link:hover, .nav-link.active {
+    color: var(--text-primary) !important;
+}
+
+.navbar-toggler {
+    border-color: var(--glass-border);
+    background: var(--bg-secondary);
+}
+
+.navbar-toggler-icon {
+    /* Auto adapt to theme using css filters if needed, but bootstrap uses background image.
+       Let's use a standard invert based on theme */
+}
+
+[data-theme="light"] .navbar-toggler-icon {
+    filter: invert(0);
+}
+[data-theme="dark"] .navbar-toggler-icon, :root .navbar-toggler-icon {
+    filter: invert(1);
+}
+
+/* =======================================================
+   CARD
+======================================================= */
+.card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    transition: var(--transition-normal);
+    overflow: hidden;
+    position: relative;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent-primary), transparent);
+    opacity: 0;
+    transition: var(--transition-normal);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+    border-color: var(--glass-border);
+}
+
+.card:hover::before {
+    opacity: 1;
+}
+
+.card-body {
+    padding: 30px;
+}
+
+/* =======================================================
+   BUTTONS
+======================================================= */
+.btn {
+    border-radius: 12px;
+    font-weight: 600;
+    padding: 12px 24px;
+    letter-spacing: 0.02em;
+    transition: var(--transition-normal);
+    border: none;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255,255,255,0.1);
+    transform: translateX(-100%) skewX(-15deg);
+    transition: 0.5s;
+    z-index: -1;
+}
+
+.btn:hover::before {
+    transform: translateX(100%) skewX(-15deg);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+    color: white;
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, var(--accent-primary-hover), var(--accent-secondary));
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(59, 130, 246, 0.5);
+}
+
+/* =======================================================
+   FORM
+======================================================= */
+.form-label {
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 10px;
+}
+
+.form-control {
+    background: var(--bg-secondary) !important;
+    border: 1px solid var(--glass-border);
+    color: var(--text-primary) !important;
+    border-radius: 12px;
+    padding: 15px;
+    transition: var(--transition-normal);
+}
+
+.form-control:focus {
+    background: var(--bg-primary) !important;
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
+    color: var(--text-primary) !important;
+}
+
+.form-control::placeholder {
+    color: var(--text-muted);
+}
+
+/* Fix for Chrome Autofill */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px var(--bg-secondary) inset !important;
+    -webkit-text-fill-color: var(--text-primary) !important;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+/* =======================================================
+   TABLE
+======================================================= */
+.table {
+    color: var(--text-secondary);
+    vertical-align: middle;
+}
+
+.table th {
+    font-weight: 600;
+    color: var(--text-primary);
+    border-bottom: 1px solid var(--glass-border);
+    padding: 15px;
+}
+
+.table td {
+    padding: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.table-hover tbody tr {
+    transition: var(--transition-fast);
+}
+
+.table-hover tbody tr:hover {
+    background: var(--bg-tertiary) !important;
+    color: var(--text-primary);
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: var(--bg-tertiary) !important;
+    color: var(--text-primary);
+}
+
+/* =======================================================
+   BADGE
+======================================================= */
+.badge {
+    padding: 8px 14px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-radius: 8px;
+    letter-spacing: 0.03em;
+}
+
+.bg-success {
+    background: var(--success-bg) !important;
+    color: var(--success) !important;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.bg-danger {
+    background: var(--danger-bg) !important;
+    color: var(--danger) !important;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.bg-primary {
+    background: rgba(59, 130, 246, 0.15) !important;
+    color: var(--accent-primary) !important;
+    border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+/* =======================================================
+   ALERT
+======================================================= */
+.alert {
+    border-radius: 16px;
+    border: 1px solid transparent;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.alert-success {
+    background: var(--success-bg);
+    border-color: rgba(16, 185, 129, 0.3);
+    color: var(--success);
+}
+
+.alert-danger {
+    background: var(--danger-bg);
+    border-color: rgba(239, 68, 68, 0.3);
+    color: var(--danger);
+}
+
+.alert-info {
+    background: rgba(59, 130, 246, 0.1);
+    border-color: rgba(59, 130, 246, 0.3);
+    color: #60a5fa;
+}
+
+.alert-light {
+    background: var(--bg-tertiary);
+    border-color: var(--glass-border);
+    color: var(--text-secondary);
+}
+
+.alert h5 {
+    margin: 0;
+    color: inherit;
+}
+
+/* =======================================================
+   STATISTIC CARD
+======================================================= */
+.stat-card {
+    border-radius: 24px;
+    padding: 30px 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--glass-border);
+    transition: var(--transition-normal);
+}
+
+.stat-card:hover {
+    transform: translateY(-8px) scale(1.02);
+}
+
+.stat-card h2 {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 5px;
+    position: relative;
+    z-index: 2;
+}
+
+.stat-card p {
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    margin-bottom: 0;
+    position: relative;
+    z-index: 2;
+    text-transform: uppercase;
+}
+
+.stat-valid {
+    background: linear-gradient(135deg, var(--success-bg), rgba(16, 185, 129, 0.05));
+    box-shadow: 0 10px 30px rgba(16, 185, 129, 0.1);
+}
+.stat-valid h2 { color: var(--success); }
+.stat-valid p { color: var(--success); }
+
+.stat-invalid {
+    background: linear-gradient(135deg, var(--danger-bg), rgba(239, 68, 68, 0.05));
+    box-shadow: 0 10px 30px rgba(239, 68, 68, 0.1);
+}
+.stat-invalid h2 { color: var(--danger); }
+.stat-invalid p { color: var(--danger); }
+
+.stat-total {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(139, 92, 246, 0.05));
+    box-shadow: 0 10px 30px rgba(59, 130, 246, 0.1);
+}
+.stat-total h2 { color: var(--accent-primary); }
+.stat-total p { color: var(--accent-primary); }
+
+/* =======================================================
+   DFA STATE
+======================================================= */
+.dfa-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin: 50px 0;
+    padding: 30px;
+    background: var(--bg-secondary);
+    border-radius: 24px;
+    border: 1px solid var(--glass-border);
+}
+
+.dfa-state {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: var(--bg-tertiary);
+    border: 2px solid var(--accent-primary);
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: 700;
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.2);
+    transition: var(--transition-normal);
+    position: relative;
+    z-index: 2;
+}
+
+.dfa-state:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 30px rgba(59, 130, 246, 0.4);
+}
+
+.start {
+    border-color: var(--warning);
+    box-shadow: 0 0 20px rgba(245, 158, 11, 0.2);
+}
+
+.accept {
+    border-color: var(--success);
+    border-width: 4px;
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
+}
+
+.dfa-arrow {
+    font-weight: 700;
+    color: var(--text-muted);
+    font-size: 18px;
+    position: relative;
+    padding: 0 10px;
+    display: flex;
+    align-items: center;
+}
+
+.dfa-arrow::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background: var(--text-muted);
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    z-index: 1;
+}
+
+.dfa-arrow::after {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-top: 2px solid var(--text-muted);
+    border-right: 2px solid var(--text-muted);
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%) rotate(45deg);
+    z-index: 1;
+}
+
+.dfa-arrow span {
+    background: var(--bg-secondary);
+    padding: 4px 8px;
+    border-radius: 6px;
+    position: relative;
+    z-index: 2;
+    border: 1px solid var(--glass-border);
+    font-size: 14px;
+}
+
+/* =======================================================
+   ANIMATION
+======================================================= */
+.fade-up {
+    animation: fadeUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.3s; }
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.pulse-glow {
+    animation: pulseGlow 2s infinite alternate;
+}
+
+@keyframes pulseGlow {
+    from {
+        box-shadow: 0 0 10px rgba(59, 130, 246, 0.2);
+    }
+    to {
+        box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+    }
+}
+
+/* =======================================================
+   CUSTOM SCROLLBAR
+======================================================= */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--bg-tertiary);
+    border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--text-muted);
+}
+
+/* =======================================================
+   FOOTER
+======================================================= */
+footer {
+    background: var(--bg-secondary) !important;
+    border-top: 1px solid var(--glass-border);
+    padding: 30px 0 !important;
+    color: var(--text-muted) !important;
+    margin-top: 60px;
+}
+
+footer small {
+    font-size: 0.9rem;
+    letter-spacing: 0.02em;
+}
+
+/* =======================================================
+   MISC
+======================================================= */
+hr {
+    border-color: var(--glass-border);
+    opacity: 1;
+    margin: 30px 0;
+}
